@@ -42,11 +42,11 @@ linear_regression = LinearRegression()
 outputs = linear_regression.forward(X)
 
 # Mean squared error
-cost = tf.reduce_mean(tf.square(outputs-Y))
+criterion = tf.reduce_mean(tf.square(outputs-Y))
 
 # Gradient descent
 optimizer = tf.train.GradientDescentOptimizer(
-	learning_rate=learning_rate).minimize(cost)
+	learning_rate=learning_rate).minimize(criterion)
 
 ###################
 ### Train model ###
@@ -59,11 +59,11 @@ with tf.Session() as sess:
 
     # Fit all training data
     for epoch in range(nb_epoch):
-        for (x, y) in zip(train_X, train_Y):
-            sess.run(optimizer, feed_dict={X: x, Y: y})
+        for (inputs, labels) in zip(train_X, train_Y):
+            sess.run(optimizer, feed_dict={X: inputs, Y: labels})
 
-        c = sess.run(cost, feed_dict={X: train_X, Y:train_Y})
-        print("Epoch:", '%d' % (epoch+1), "cost =", "{:.4f}".format(c))
+        loss = sess.run(criterion, feed_dict={X: train_X, Y:train_Y})
+        print("Epoch:", '%d' % (epoch+1), "loss =", "{:.4f}".format(loss))
 
     weight = sess.run(linear_regression.W)
     bias = sess.run(linear_regression.b)
