@@ -28,8 +28,8 @@ train_X, train_Y = make_regression(n_features=1, noise=5.0, random_state=0)
 model = Sequential()
 model.add(Dense(1, activation='linear', input_shape=(1,)))
 
-sgd = SGD(lr=learning_rate)
-model.compile(loss='mse', optimizer=sgd)
+optimizer = SGD(lr=learning_rate)
+model.compile(loss='mse', optimizer=optimizer)
 
 ###################
 ### Train model ###
