@@ -9,6 +9,13 @@ import numpy as np
 from sklearn.datasets import make_regression
 from keras.layers import Dense, Input
 from keras.models import Sequential
+from keras.optimizers import SGD
+
+##################
+### Parameters ###
+##################
+learning_rate = 0.01
+nb_epoch = 10
 
 ######################
 ### Create dataset ###
@@ -19,17 +26,19 @@ train_X, train_Y = make_regression(n_features=1, noise=5.0, random_state=0)
 ### Construct model ###
 #######################
 model = Sequential()
-model.add(Dense(1, activation = 'linear', input_shape = (1,)))
-model.compile(loss = 'mse', optimizer='sgd')
+model.add(Dense(1, activation='linear', input_shape=(1,)))
+
+sgd = SGD(lr=learning_rate)
+model.compile(loss='mse', optimizer=sgd)
 
 ###################
 ### Train model ###
 ###################
-model.fit(train_X, train_Y, batch_size = 1, nb_epoch = 10)
+model.fit(train_X, train_Y, batch_size=1, nb_epoch=nb_epoch)
 
 #Display the learned parameters
 model.get_weights()
 weight = model.get_weights()[0][0,0]
 bias = model.get_weights()[1][0]
-print("Training Finished!")
+print("Optimization Finished!")
 print("W=", weight, "b=", bias)
