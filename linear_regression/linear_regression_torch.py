@@ -7,6 +7,7 @@ Project: https://github.com/TDeVries/Deep-Learning-Rosetta-Stone
 from __future__ import print_function
 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
 import torch
 import torch.nn as nn
@@ -75,11 +76,17 @@ for epoch in range(nb_epoch):
 
 	print("Epoch:", '%d' % (epoch+1), "cost =", "{:.4f}".format(loss))
 
+######################
+### Evaluate model ###
+######################
 weight, bias =  linear_regression.w.parameters()
 weight = weight.data[0,0]
 bias = bias.data[0]
 
-print("Optimization Finished!")
 print("W=", weight, "b=", bias)
-
+x = np.linspace(-2.5,2.5, 100)
+y = x*weight+bias
+plt.plot(x, y, c = 'r')
+plt.scatter(np.ravel(train_X.numpy()), np.ravel(train_Y.numpy()))
+plt.show()
 

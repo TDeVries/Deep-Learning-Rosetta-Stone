@@ -7,6 +7,7 @@ Project: https://github.com/TDeVries/Deep-Learning-Rosetta-Stone
 from __future__ import print_function
 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
 import tensorflow as tf
 rng = np.random
@@ -65,8 +66,15 @@ with tf.Session() as sess:
         loss = sess.run(criterion, feed_dict={X: train_X, Y:train_Y})
         print("Epoch:", '%d' % (epoch+1), "loss =", "{:.4f}".format(loss))
 
+    ######################
+    ### Evaluate model ###
+    ######################
     weight = sess.run(linear_regression.W)
     bias = sess.run(linear_regression.b)
+    print("W=", weight, "b=", bias)
 
-print("Optimization Finished!")
-print("W=", weight, "b=", bias)
+    x = np.linspace(-2.5,2.5, 100)
+    y = x*weight+bias
+    plt.plot(x, y, c = 'r')
+    plt.scatter(train_X, train_Y)
+    plt.show()

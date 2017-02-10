@@ -6,6 +6,7 @@ Project: https://github.com/TDeVries/Deep-Learning-Rosetta-Stone
 from __future__ import print_function
 
 import numpy as np
+import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
 from keras.layers import Dense, Input
 from keras.models import Sequential
@@ -36,9 +37,16 @@ model.compile(loss='mse', optimizer=optimizer)
 ###################
 model.fit(train_X, train_Y, batch_size=1, nb_epoch=nb_epoch)
 
-#Display the learned parameters
+######################
+### Evaluate model ###
+######################
 model.get_weights()
 weight = model.get_weights()[0][0,0]
 bias = model.get_weights()[1][0]
-print("Optimization Finished!")
 print("W=", weight, "b=", bias)
+
+x = np.linspace(-2.5,2.5, 100)
+y = x*weight+bias
+plt.plot(x, y, c = 'r')
+plt.scatter(train_X, train_Y)
+plt.show()
