@@ -42,7 +42,7 @@ linear_regression = LinearRegression()
 outputs = linear_regression.forward(X)
 
 # Mean squared error
-cost = tf.reduce_mean(tf.square(outpus-Y))
+cost = tf.reduce_mean(tf.square(outputs-Y))
 
 # Gradient descent
 optimizer = tf.train.GradientDescentOptimizer(
