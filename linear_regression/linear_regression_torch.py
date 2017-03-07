@@ -27,66 +27,67 @@ train_X, train_Y = make_regression(n_features=1, noise=5.0, random_state=0)
 train_Y = np.reshape(train_Y, (100, 1))
 train_X, train_Y = torch.FloatTensor(train_X), torch.FloatTensor(train_Y)
 
+
 #######################
-### Construct model ### 
+### Construct model ###
 #######################
 class LinearRegression(nn.Module):
-	def __init__(self):
-		super(LinearRegression, self).__init__()
-		self.w = nn.Linear(1,1)
+    def __init__(self):
+        super(LinearRegression, self).__init__()
+        self.w = nn.Linear(1, 1)
 
-	def forward(self, x):
-		x = self.w(x)
-		return x
+    def forward(self, x):
+        x = self.w(x)
+        return x
+
 
 linear_regression = LinearRegression()
 criterion = nn.MSELoss()
-optimizer = optim.SGD(linear_regression.parameters(), lr = learning_rate)
+optimizer = optim.SGD(linear_regression.parameters(), lr=learning_rate)
 
 ###################
 ### Train model ###
 ###################
 for epoch in range(nb_epoch):
-	for (inputs, labels) in zip(train_X, train_Y):
+    for (inputs, labels) in zip(train_X, train_Y):
 
-		# Wrap tensors so that they can be differentiated
-		inputs, labels = Variable(inputs), Variable(labels)
-		# Add a batch dimension (Pytorch only does minibatches)
-		inputs = inputs.unsqueeze(0)
+        # Wrap tensors so that they can be differentiated
+        inputs, labels = Variable(inputs), Variable(labels)
+        # Add a batch dimension (Pytorch only does minibatches)
+        inputs = inputs.unsqueeze(0)
 
-		# Zero the parameter gradients
-		optimizer.zero_grad()
+        # Zero the parameter gradients
+        optimizer.zero_grad()
 
-		# Forward pass through network
-		outputs = linear_regression(inputs)
+        # Forward pass through network
+        outputs = linear_regression(inputs)
 
-		# Calculate the loss
-		loss = criterion(outputs, labels)
+        # Calculate the loss
+        loss = criterion(outputs, labels)
 
-		# Backpropogate the loss through the network 
-		loss.backward()
+        # Backpropogate the loss through the network
+        loss.backward()
 
-		# Update the network weights
-		optimizer.step()
+        # Update the network weights
+        optimizer.step()
 
-	#Calculate the loss over the entire training set
-	outputs = linear_regression(Variable(train_X))
-	loss = criterion(outputs, Variable(train_Y))
-	loss = loss.data[0]
+    # Calculate the loss over the entire training set
+    outputs = linear_regression(Variable(train_X))
+    loss = criterion(outputs, Variable(train_Y))
+    loss = loss.data[0]
 
-	print("Epoch:", '%d' % (epoch+1), "cost =", "{:.4f}".format(loss))
+    print("Epoch:", '%d' % (epoch + 1), "cost =", "{:.4f}".format(loss))
 
 ######################
 ### Evaluate model ###
 ######################
-weight, bias =  linear_regression.w.parameters()
-weight = weight.data[0,0]
+weight, bias = linear_regression.w.parameters()
+weight = weight.data[0, 0]
 bias = bias.data[0]
 
 print("W=", weight, "b=", bias)
-x = np.linspace(-2.5,2.5, 100)
-y = x*weight+bias
-plt.plot(x, y, c = 'r')
+x = np.linspace(-2.5, 2.5, 100)
+y = x * weight + bias
+plt.plot(x, y, c='r')
 plt.scatter(np.ravel(train_X.numpy()), np.ravel(train_Y.numpy()))
 plt.show()
-

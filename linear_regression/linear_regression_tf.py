@@ -23,8 +23,9 @@ nb_epoch = 10
 ######################
 train_X, train_Y = make_regression(n_features=1, noise=5.0, random_state=0)
 
+
 #######################
-### Construct model ### 
+### Construct model ###
 #######################
 class LinearRegression():
     def __init__(self):
@@ -35,6 +36,7 @@ class LinearRegression():
         x = tf.add(tf.mul(x, self.W), self.b)
         return x
 
+
 # tf Graph Input
 X = tf.placeholder("float")
 Y = tf.placeholder("float")
@@ -43,11 +45,11 @@ linear_regression = LinearRegression()
 outputs = linear_regression.forward(X)
 
 # Mean squared error
-criterion = tf.reduce_mean(tf.square(outputs-Y))
+criterion = tf.reduce_mean(tf.square(outputs - Y))
 
 # Gradient descent
 optimizer = tf.train.GradientDescentOptimizer(
-	learning_rate=learning_rate).minimize(criterion)
+    learning_rate=learning_rate).minimize(criterion)
 
 ###################
 ### Train model ###
@@ -63,8 +65,8 @@ with tf.Session() as sess:
         for (inputs, labels) in zip(train_X, train_Y):
             sess.run(optimizer, feed_dict={X: inputs, Y: labels})
 
-        loss = sess.run(criterion, feed_dict={X: train_X, Y:train_Y})
-        print("Epoch:", '%d' % (epoch+1), "loss =", "{:.4f}".format(loss))
+        loss = sess.run(criterion, feed_dict={X: train_X, Y: train_Y})
+        print("Epoch:", '%d' % (epoch + 1), "loss =", "{:.4f}".format(loss))
 
     ######################
     ### Evaluate model ###
@@ -73,8 +75,8 @@ with tf.Session() as sess:
     bias = sess.run(linear_regression.b)
     print("W=", weight, "b=", bias)
 
-    x = np.linspace(-2.5,2.5, 100)
-    y = x*weight+bias
-    plt.plot(x, y, c = 'r')
+    x = np.linspace(-2.5, 2.5, 100)
+    y = x * weight + bias
+    plt.plot(x, y, c='r')
     plt.scatter(train_X, train_Y)
     plt.show()

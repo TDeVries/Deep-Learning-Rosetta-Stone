@@ -8,7 +8,7 @@ from __future__ import print_function
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
-from keras.layers import Dense, Input
+from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import SGD
 
@@ -41,12 +41,12 @@ model.fit(train_X, train_Y, batch_size=1, nb_epoch=nb_epoch)
 ### Evaluate model ###
 ######################
 model.get_weights()
-weight = model.get_weights()[0][0,0]
+weight = model.get_weights()[0][0, 0]
 bias = model.get_weights()[1][0]
 print("W=", weight, "b=", bias)
 
-x = np.linspace(-2.5,2.5, 100)
-y = x*weight+bias
-plt.plot(x, y, c = 'r')
+x = np.linspace(-2.5, 2.5, 100)
+y = x * weight + bias
+plt.plot(x, y, c='r')
 plt.scatter(train_X, train_Y)
 plt.show()

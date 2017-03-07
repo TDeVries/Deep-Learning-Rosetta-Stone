@@ -6,7 +6,6 @@ Project: https://github.com/TDeVries/Deep-Learning-Rosetta-Stone
 
 from __future__ import print_function
 
-import numpy as np
 import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 
@@ -24,6 +23,7 @@ n_classes = 10
 ######################
 mnist = input_data.read_data_sets("/tmp/data/", one_hot=True)
 
+
 #######################
 ### Construct model ###
 #######################
@@ -36,6 +36,7 @@ class LogisticRegression():
     def forward(self, x):
         x = tf.nn.softmax(tf.matmul(x, self.W) + self.b)
         return x
+
 
 # tf Graph Input
 X = tf.placeholder("float", [None, n_input])
@@ -63,7 +64,7 @@ with tf.Session() as sess:
 
     # Fit all training data
     for epoch in range(n_epochs):
-        n_batches = int(mnist.train.num_examples/batch_size)
+        n_batches = int(mnist.train.num_examples / batch_size)
         avg_loss = 0.
 
         for i in range(n_batches):
@@ -72,9 +73,9 @@ with tf.Session() as sess:
             _, loss = sess.run(
                 [optimizer, criterion], feed_dict={X: batch_X, Y: batch_Y})
 
-            avg_loss += loss/n_batches
+            avg_loss += loss / n_batches
 
-        print("Epoch:", '%d' % (epoch+1), "loss =", "{:.9f}".format(avg_loss))
+        print("Epoch:", '%d' % (epoch + 1), "loss =", "{:.9f}".format(avg_loss))
 
     ######################
     ### Evaluate model ###

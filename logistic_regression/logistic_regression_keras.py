@@ -6,8 +6,7 @@ Project: https://github.com/TDeVries/Deep-Learning-Rosetta-Stone
 
 from __future__ import print_function
 
-import numpy as np
-from keras.layers import Dense, Input
+from keras.layers import Dense
 from keras.models import Sequential
 from keras.optimizers import SGD
 from keras.datasets import mnist
@@ -32,7 +31,7 @@ train_X = train_X.reshape(len(train_X), n_input)
 test_X = test_X.reshape(len(test_X), n_input)
 
 # Scale values to be from 0 to 1 and convert to float
-train_X, test_X = train_X/255., test_X/255.
+train_X, test_X = train_X / 255., test_X / 255.
 
 # One-hot encode class labels
 train_Y = np_utils.to_categorical(train_y, n_classes)
